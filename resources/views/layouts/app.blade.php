@@ -20,15 +20,29 @@
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
         >
             {{-- Logo --}}
-            <div class="flex items-center gap-3 px-6 py-5 border-b border-sky-600">
-                <div class="flex items-center justify-center w-9 h-9 bg-white rounded-lg shadow">
-                    <svg class="w-5 h-5 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            <div class="flex items-center gap-3 px-5 py-4 border-b border-sky-600">
+                <div class="w-9 h-9 shrink-0">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <defs>
+                            <linearGradient id="hexSidebar" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#7DD3FC;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0.9" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 5 L88 27.5 L88 72.5 L50 95 L12 72.5 L12 27.5 Z"
+                              stroke="url(#hexSidebar)" stroke-width="3.5" fill="none"/>
+                        <path d="M18 50 L34 50 L39 39 L44 61 L50 43 L56 50 L82 50"
+                              stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9"/>
+                        <circle cx="50" cy="33" r="7.5" fill="white" opacity="0.95"/>
+                        <path d="M37 68 Q37 54 50 54 Q63 54 63 68"
+                              stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.95"/>
                     </svg>
                 </div>
                 <div>
-                    <p class="text-white font-bold text-lg leading-tight">SkinExpert</p>
-                    <p class="text-sky-200 text-xs">Sistem Pakar Kulit</p>
+                    <div class="font-bold text-base leading-tight">
+                        <span class="text-white">SKIN</span><span class="text-sky-300">EXPERT</span>
+                    </div>
+                    <p class="text-sky-300 text-xs">Sistem Pakar Kulit</p>
                 </div>
             </div>
 

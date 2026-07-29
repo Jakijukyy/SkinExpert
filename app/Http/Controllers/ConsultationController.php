@@ -32,36 +32,38 @@ class ConsultationController extends Controller
     {
         $request->validate([
             'gejala'   => ['required', 'array', 'min:1'],
-            'gejala.*' => ['numeric', 'min:0', 'max:1'],
+            'gejala.*' => ['required', 'numeric', 'min:0.01', 'max:1'],
         ], [
             'gejala.required' => 'Pilih minimal satu gejala untuk memulai konsultasi.',
             'gejala.min'      => 'Pilih minimal satu gejala untuk memulai konsultasi.',
+            'gejala.*.min'    => 'Tingkat keyakinan minimal adalah 1%.',
         ]);
 
-        // Filter only checked (non-zero) symptoms
-        $selectedSymptoms = array_filter(
-            $request->input('gejala', []),
-            fn ($cf) => $cf > 0
-        );
+        // Get raw input and clean it
+        $rawInput = $request->input('gejala', []);
 
-        if (empty($selectedSymptoms)) {
-            return back()->withErrors(['gejala' => 'Pilih minimal satu gejala dengan tingkat keyakinan lebih dari 0.']);
+        // Filter only non-empty values (JS should've cleaned this, but double-check)
+        $selectedSymptoms = [];
+        foreach ($rawInput as $gejalaId => $cfValue) {
+            $cfFloat = floatval($cfValue);
+            if ($cfFloat > 0) {
+                $selectedSymptoms[intval($gejalaId)] = $cfFloat;
+            }
         }
 
-        // Cast keys to int
-        $selectedSymptoms = array_combine(
-            array_map('intval', array_keys($selectedSymptoms)),
-            array_map('floatval', array_values($selectedSymptoms))
-        );
+        if (empty($selectedSymptoms)) {
+            return back()->withErrors(['gejala' => 'Pilih minimal satu gejala dengan tingkat keyakinan lebih dari 0.'])->withInput();
+        }
 
+        // Run CF calculation
         $results = $this->cfService->calculate($selectedSymptoms);
 
         if (empty($results)) {
-            return back()->withErrors(['gejala' => 'Tidak ditemukan penyakit yang cocok dengan gejala yang dipilih. Coba pilih gejala yang berbeda.']);
+            return back()->withErrors(['gejala' => 'Tidak ditemukan penyakit yang cocok dengan gejala yang dipilih. Pastikan gejala yang Anda pilih sudah benar.'])->withInput();
         }
 
-        $highest   = $results[0];
-        $penyakit  = Penyakit::find($highest['penyakit_id']);
+        // Save diagnosis
+        $highest = $results[0];
 
         DB::transaction(function () use ($selectedSymptoms, $results, $highest, &$diagnosa) {
             $diagnosa = Diagnosa::create([

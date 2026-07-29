@@ -13,9 +13,27 @@
     {{-- Navbar --}}
     <nav class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200" x-data="{ open: false }">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-            <a href="/" class="flex items-center gap-2 font-bold text-sky-700 text-xl">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                SkinExpert
+            <a href="/" class="flex items-center gap-2">
+                <div class="w-8 h-8 shrink-0">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <defs>
+                            <linearGradient id="hexNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#22D3EE;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0C4A6E;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 5 L88 27.5 L88 72.5 L50 95 L12 72.5 L12 27.5 Z"
+                              stroke="url(#hexNav)" stroke-width="3.5" fill="none"/>
+                        <path d="M18 50 L34 50 L39 39 L44 61 L50 43 L56 50 L82 50"
+                              stroke="#0EA5E9" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                        <circle cx="50" cy="33" r="7.5" fill="#0C4A6E"/>
+                        <path d="M37 68 Q37 54 50 54 Q63 54 63 68"
+                              stroke="#0C4A6E" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="font-bold text-xl">
+                    <span class="text-sky-950">SKIN</span><span class="text-sky-500">EXPERT</span>
+                </span>
             </a>
             <div class="hidden md:flex items-center gap-6">
                 <a href="#features" class="text-sm text-gray-600 hover:text-sky-700 transition">Fitur</a>
